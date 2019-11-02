@@ -1,12 +1,17 @@
 package com.company;
 
 public class myStringBufferUsing {
+    private StringBuffer stringBuffer;
 
-    public static void addNewContact(StringBuffer stringBuffer, String contact){
+    myStringBufferUsing(StringBuffer stringBuffer)
+    {
+        this.stringBuffer = stringBuffer;
+    }
+    public void addNewContact(String contact){
         stringBuffer.append(contact).append("\n");
     }
 
-    public static void repairContacts(StringBuffer stringBuffer){
+    public void repairContacts(){
         for (int i = 0; i < stringBuffer.length() ; i++) {
             if (stringBuffer.charAt(i) == '\n'){
                 if(stringBuffer.charAt(i-1) == '@'){
@@ -16,11 +21,15 @@ public class myStringBufferUsing {
         }
     }
 
-    public static void insertCountToBegin(StringBuffer stringBuffer){
+    public void insertCountToBegin(){
         int count = 0;
         for (int i = 0; i < stringBuffer.length() ; i++) {
             if(stringBuffer.charAt(i) == '\n') ++count;
         }
         stringBuffer.insert(0 , "Количество контактов = " + count+ "\n");
+    }
+
+    public StringBuffer getStringBuffer(){
+        return this.stringBuffer;
     }
 }
