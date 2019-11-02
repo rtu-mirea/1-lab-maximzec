@@ -16,29 +16,29 @@ public class Main {
         int choice = in.nextInt();
         switch (choice){
             case 1:{
+               myStringUsing su = new myStringUsing(splitted);
                 System.out.print("Исправленные записи в контактах:");
-                System.out.print(Arrays.deepToString(myStringUsing.surnameToLowCase(splitted))+"\n");
+                System.out.print(Arrays.deepToString(su.surnameToLowCase())+"\n");
                 System.out.print("Введите поставщика услуг: ");
 
                 String email = in.nextLine();
                 System.out.print("Список контактов по поставщику услуг: ");
-                System.out.print(myStringUsing.getContactsByEmail(splitted, email) + "\n");
-                System.out.print("Количество адресов на com" + myStringUsing.getComCount(splitted) + "\n");
+                System.out.print(su.getContactsByEmail(email) + "\n");
+                System.out.print("Количество адресов на com" + su.getComCount() + "\n");
                 System.out.print("Введите первый символ фамилии: ");
                 String a = in.nextLine();
-                System.out.print("Массив фамилий на эту букву: " + Arrays.deepToString(myStringUsing.getSurnameByChar(splitted , a.charAt(0))));
+                System.out.print("Массив фамилий на эту букву: " + Arrays.deepToString(su.getSurnameByChar(a.charAt(0))));
                 break;
             }
             case 2:{
                 in.nextLine();
-                StringBuffer stringBuffer = new StringBuffer(text);
-
+                myStringBufferUsing ms = new myStringBufferUsing(new StringBuffer(text));
                 System.out.print("Добавьте новый контакт: ");
                 String input = in.nextLine();
-                myStringBufferUsing.addNewContact(stringBuffer,input);
-                myStringBufferUsing.repairContacts(stringBuffer);
-                myStringBufferUsing.insertCountToBegin(stringBuffer);
-                System.out.print(stringBuffer);
+                ms.addNewContact(input);
+                ms.repairContacts();
+                ms.insertCountToBegin();
+                System.out.print(ms.getStringBuffer());
                 break;
             }
             case 3:{
