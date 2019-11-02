@@ -10,8 +10,8 @@ public class myRegexUsing {
         return price.matches(regex);
     }
 
-    public static String returnValue(String price){
-        String[] prices = price.split(" ");
+    public static String returnValue(String textWIthPrice){
+        String[] prices = textWIthPrice.split(" ");
         StringBuffer newPrice = new StringBuffer();
         for (int i = 0; i < prices.length ; i++) {
             if(isMatch(prices[i])){
