@@ -1,7 +1,14 @@
 package com.company;
 
 public class myStringUsing {
-    public static String[] surnameToLowCase(String[] strings){
+    
+    private String[] strings;
+
+    myStringUsing(String[] strings){
+        this.strings = strings;
+    }
+
+    public  String[] surnameToLowCase(){
         String[] _strings = new String[strings.length];
         for (int i = 0; i < strings.length ; i++) {
             int index = strings[i].indexOf(',');
@@ -10,7 +17,7 @@ public class myStringUsing {
         return _strings;
     }
 
-    public static String[] getSurnameByChar(String[] strings , char a){
+    public  String[] getSurnameByChar(char a){
         int charCount = 0;
         for (int i = 0; i < strings.length; i++) if(strings[i].charAt(0) == a) charCount++;
         String[] _strings = new String[charCount];
@@ -24,7 +31,7 @@ public class myStringUsing {
         return _strings;
     }
 
-    public static String getContactsByEmail(String[] strings , String email){
+    public  String getContactsByEmail(String email){
         String[] _strings = new String[strings.length];
         String result = "";
         for (int i = 0; i < strings.length ; ++i) {
@@ -40,7 +47,7 @@ public class myStringUsing {
         return result;
     }
 
-    public static int getComCount(String[] strings){
+    public int getComCount(){
         String[] _strings = new String[strings.length];
         int result = 0;
         for (int i = 0; i < strings.length ; ++i) {
