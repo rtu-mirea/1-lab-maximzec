@@ -4,35 +4,28 @@ import java.util.*;
 
 public class EffectiveProductionSystem {
 
-    private static List<User> users = new ArrayList<>();
-    private static List<Request> requests = new ArrayList<>();
-    private static List<Instrument> instruments = new ArrayList<>();
-    private static User currentUser;
+    private  List<User> users = new ArrayList<>();
+    private  List<Request> requests = new ArrayList<>();
+    private  List<Instrument> instruments = new ArrayList<>();
+    private  User currentUser;
 
-    public static void main(String[] args) throws Exception {
+    public void main(String[] args) throws Exception {
         addUser("Admin" , "Admin " , "Admin" , "Admin" ,0);
         int choice = -1;
         while (choice != 3)
         {
             System.out.println("Добро пожаловать!");
             System.out.println("Выберите действие:");
-            System.out.println("1. Зарегистировать нового пользователя.");
-            System.out.println("2. Войти в систему.");
-            System.out.println("3. Выход.");
+            System.out.println("1. Войти в систему");
+            System.out.println("2. Выход.");
             Scanner in = new Scanner(System.in);
             choice = in.nextInt();
             switch (choice) {
                 case 1:
-                    signUp();
-                    if(currentUser == null)
-                        continue;
-                    getMenu();
-                    break;
-                case 2:
                     signIn();
                     if(currentUser == null)
                         continue;
-                    getMenu();
+                    getMenu(this.currentUser);
                     break;
                 default:
                     continue;
@@ -43,26 +36,26 @@ public class EffectiveProductionSystem {
 
     }
 
-    private static void addUser(String name , String login ,String password, String repeation , int type) throws Exception {
+    private void addUser(String name , String login ,String password, String repeation , int type) throws Exception {
         if(!password.equals(repeation)) throw new Exception("Пароли не совпадают");
-        for(User user : users){
+        for(User user : this.users){
             if(user.enter(login , password)) throw new Exception("Такой пользователь уже существует");
         }
 
         switch(type){
-            case 0: users.add(new Admin(name , login , password));break;
-            case 1: users.add(new Client(name , login ,password));break;
+            case 0: this.users.add(new Admin(name , login , password));break;
+            case 1: this.users.add(new Client(name , login ,password));break;
         }
     }
 
-    private static User findUser(String login , String password) throws Exception{
-        for(User user : users){
+    private User findUser(String login , String password) throws Exception{
+        for(User user : this.users){
             if (user.enter(login , password)) return user;
         }
         throw new Exception("Пользователь не найден");
     }
 
-    private static void signIn(){
+    private void signIn(){
         Scanner in = new Scanner(System.in);
         try {
             String Login, Password;
@@ -76,7 +69,7 @@ public class EffectiveProductionSystem {
         }
     }
 
-    private static void signUp(){
+    private void signUp(){
         Scanner in = new Scanner(System.in);
         try {
             String Name, Login, Password, Repeation;
@@ -97,7 +90,7 @@ public class EffectiveProductionSystem {
         }
     }
 
-    private static void processRequests(){
+    private void processRequests(){
 
         requests.sort(new Comparator<Request>() {
             @Override
@@ -109,7 +102,7 @@ public class EffectiveProductionSystem {
 
 
 
-    static private void orderInterface(){
+     private void orderInterface(){
         int choice = -1;
         while (choice!= 2){
             System.out.println("Заказы:");
@@ -129,12 +122,12 @@ public class EffectiveProductionSystem {
 
                     request.addPart(new Instrument(name , count) , time );
                 }
-                requests.add(request);
+                this.requests.add(request);
             }
         }
     }
 
-    static private void instrumentInterface(){
+     private void instrumentInterface(){
         int choice = -1;
         while (choice!= 2){
             System.out.println("Оборудование:");
@@ -152,23 +145,52 @@ public class EffectiveProductionSystem {
                         instrument.setCount(instrument.getCount() + count); break;
                     }
                 }
-                instruments.add(new Instrument(name , count));
+                this.instruments.add(new Instrument(name , count));
             }
         }
     }
 
-    static private void planInterface(){
-        processRequests();
-        for (Request request : requests){
+     private void planInterface(){
+        this.processRequests();
+        for (Request request : this.requests){
             System.out.println(request);
         }
 
     }
 
-    public static void getMenu(){
+    private void getMenu(User currentUser){
         Scanner in = new Scanner(System.in);
         int choice = -1;
+        if(currentUser instanceof Admin){
         while (choice!=4){
+            System.out.println("1.Добавить оборудование");
+            System.out.println("2.Прием заказов");
+            System.out.println("3.Получение плана оптимального выполнения работ");
+            System.out.println("4.Зарегистрировать нового пользователя");
+            System.out.println("5.Выход");
+            choice = in.nextInt();
+            switch (choice)
+            {
+                case 1:{
+                    instrumentInterface();
+                    break;
+                }
+                case 2:{
+                    orderInterface();
+                    break;
+                }
+                case 3:{
+                    planInterface();
+                    break;
+                }
+                case 4:{
+                    this.signUp();
+                    break;
+                }
+                default:continue;
+            }
+        }
+      }else{
             System.out.println("1.Добавить оборудование");
             System.out.println("2.Прием заказов");
             System.out.println("3.Получение плана оптимального выполнения работ");
@@ -190,7 +212,10 @@ public class EffectiveProductionSystem {
                 }
                 default:continue;
             }
+        
+        
         }
+        
     }
 
 
