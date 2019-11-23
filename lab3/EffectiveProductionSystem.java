@@ -84,7 +84,6 @@ public class EffectiveProductionSystem {
             Repeation = in.next();
             type = 1;
             addUser(Name, Login, Password, Repeation, type);
-            currentUser = findUser(Login,Password);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
